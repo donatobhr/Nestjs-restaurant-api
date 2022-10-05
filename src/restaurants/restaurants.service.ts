@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Query } from 'express-serve-static-core';
 import { Model } from 'mongoose';
+import { User } from 'src/auth/schemas/user.schema';
 import APIFeautures from 'src/utils/apiFeature.utils';
 import { Restaurant } from './schemas/restaurant.schema';
 
@@ -38,7 +39,8 @@ export class RestaurantsService {
         return restaurant;
     }
 
-    async create(restaurant: Restaurant): Promise<Restaurant> {
+    async create(restaurant: Partial<Restaurant>, user: User): Promise<Restaurant> {
+        restaurant.user = user._id;
         return await this.restaurantModel.create(restaurant);
     }
 

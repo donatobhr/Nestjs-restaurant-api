@@ -1,5 +1,8 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import mongoose from "mongoose";
+import { User } from "src/auth/schemas/user.schema";
 import APIFeautures from "src/utils/apiFeature.utils";
+
 
 export class Location {
 
@@ -55,8 +58,11 @@ export class Restaurant {
     @Prop()
     images?: object[];
 
-    @Prop({ type: Object, ref: 'Location' })
+    @Prop({ 'type': Object, ref: 'Location' })
     location?: Location;
+
+    @Prop({ 'type': mongoose.Schema.Types.ObjectId, ref: 'User'})
+    user: User;
 }
 
 export const RestaurantSchema = SchemaFactory.createForClass(Restaurant);

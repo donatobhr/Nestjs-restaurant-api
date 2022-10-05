@@ -1,3 +1,4 @@
+import { JwtService } from '@nestjs/jwt';
 import { S3 } from 'aws-sdk';
 import * as nodeGeoCode from 'node-geocoder';
 import RestaurantS3Bucket from 'src/helpers/restaurantS3Bucket.helper';
@@ -52,5 +53,12 @@ export default class APIFeautures {
     static async deleteImages(images: Array<Object>)
     {
         return await RestaurantS3Bucket.getInstance().deleteImages(images);    
+    }
+
+    static async assignJwtToken(userId: string, jwtService: JwtService): Promise<string>
+    {
+        const payload = { id: userId }
+        const token = await jwtService.sign(payload);
+        return token;
     }
 } 

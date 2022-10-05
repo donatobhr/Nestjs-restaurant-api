@@ -4,7 +4,7 @@ export class UserDto
 {
     @IsNotEmpty()
     @IsString()
-    readonly name: string;
+    readonly name?: string;
 
     @IsNotEmpty()
     @IsEmail({}, {message: 'Please enter correct email address'})
@@ -13,5 +13,5 @@ export class UserDto
     @IsNotEmpty()
     @IsString()
     @MinLength(8)
-    readonly password?: string;
+    readonly password: string;
 }

@@ -7,11 +7,17 @@ import { User } from './schemas/user.schema';
 export class AuthController {
 
     constructor(private authService: AuthService){}
-
+    
     @Post('/signup')
-    signUp(@Body() user: UserDto): Promise<User>
+    signUp(@Body() user: UserDto): Promise<{token: string}>
     {
         return this.authService.signUp(user);
     }
 
+
+    @Post('/login')
+    login(@Body() user: Partial<UserDto>): Promise<{token: string}>
+    {
+        return this.authService.login(user);
+    }
 }
