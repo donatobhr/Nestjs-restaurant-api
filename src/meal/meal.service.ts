@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { User } from 'src/auth/schemas/user.schema';
 import { Restaurant } from 'src/restaurants/schemas/restaurant.schema';
-import { MealDto } from './dto/meal.dto';
 import { Meal } from './schema/meal.schema';
 
 @Injectable()
@@ -14,6 +13,33 @@ export class MealService {
         @InjectModel(Restaurant.name) private restaurantModel: mongoose.Model<Restaurant>    
     ){}
 
+    async findAll(): Promise<Meal[]>
+    {
+        return await this.mealModel.find();
+    }
+
+    async findById(id: string): Promise<Meal>
+    {
+        const meal = await this.mealModel.findById(id);
+        if(!meal)
+            throw new NotFoundException('Meal not found');
+
+        return meal;
+    }
+
+
+    async findByRestaurant(id: string): Promise<Meal[]>
+    {
+        return await this.mealModel.find({ restaurant: id});
+    }
+
+    async updateById(id: string, updateMeal: Partial<Meal>)
+    {
+        return await this.mealModel.findByIdAndUpdate(id, updateMeal, {
+            new: true,
+            runValidators: true
+        })
+    }
 
     async create(meal: Partial<Meal>, user: User): Promise<Meal> {
         const restaurant = await this.restaurantModel.findById(meal.restaurant);
@@ -30,5 +56,12 @@ export class MealService {
         restaurant.menu.push(createdMeal);
         restaurant.save();
         return createdMeal;
+    }
+
+    async deleteById(id: string): Promise<Meal>
+    {
+        return this.mealModel.findByIdAndDelete(id, {
+            returnOriginal: true
+        });
     }
 }

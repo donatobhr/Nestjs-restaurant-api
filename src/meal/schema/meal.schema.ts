@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import mongoose, { Document, mongo, Mongoose } from "mongoose";
+import mongoose, { Document } from "mongoose";
 import { User } from "src/auth/schemas/user.schema";
-import { Restaurant, RestaurantSchema } from "src/restaurants/schemas/restaurant.schema";
 
 export enum Category
 {

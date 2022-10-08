@@ -48,7 +48,7 @@ export class RestaurantsController {
         if (!validId)
             throw new BadRequestException('Wrong db Id format')
 
-        //convert to a decorator :)
+        //TODO convert to a decorator :)
         const resta = await this.resturantsService.find(id);
 
         if (resta.user.toString() !== user._id.toString())
