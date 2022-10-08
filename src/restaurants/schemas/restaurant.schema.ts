@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import mongoose from "mongoose";
+import mongoose, { Document, mongo } from "mongoose";
 import { User } from "src/auth/schemas/user.schema";
+import { Meal } from "src/meal/schema/meal.schema";
 import APIFeautures from "src/utils/apiFeature.utils";
 
 
@@ -34,8 +35,10 @@ export enum Category {
     FINE_DINNING = 'Fine Dinning'
 }
 
-@Schema()
-export class Restaurant {
+@Schema({
+    timestamps: true
+})
+export class Restaurant extends Document{
 
     @Prop({ required: true })
     name: string;
@@ -58,11 +61,14 @@ export class Restaurant {
     @Prop()
     images?: object[];
 
-    @Prop({ 'type': Object, ref: 'Location' })
+    @Prop({ 'type': Object, ref: Location.name })
     location?: Location;
 
-    @Prop({ 'type': mongoose.Schema.Types.ObjectId, ref: 'User'})
+    @Prop({ 'type': mongoose.Schema.Types.ObjectId, ref: User.name})
     user: User;
+
+    @Prop([{type: mongoose.Schema.Types.ObjectId, ref: Meal.name}])
+    menu?: Meal[];
 }
 
 export const RestaurantSchema = SchemaFactory.createForClass(Restaurant);
