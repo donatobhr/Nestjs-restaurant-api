@@ -1,15 +1,15 @@
-import { BadRequestException, Body, Controller, Delete, ForbiddenException, Get, Param, Post, Put, Query, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, ForbiddenException, Get, Param, Post, Put, Query, UploadedFiles, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common';
 import RestaurantDto from './dto/restaurant.dto';
 import { RestaurantsService } from './restaurants.service';
 import { Restaurant } from './schemas/restaurant.schema';
 import { Query as ExpressQuery } from 'express-serve-static-core';
-import mongoose from 'mongoose';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { User } from 'src/auth/schemas/user.schema';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
+import { MongoIdValidator } from 'src/utils/ validators/mongoId.validation';
 
 @Controller('restaurants')
 export class RestaurantsController {
@@ -22,12 +22,7 @@ export class RestaurantsController {
     }
 
     @Get(':id')
-    async getRestaurant(@Param('id') id: string): Promise<Restaurant> {
-        //convert this to a Decorator
-        const validId = mongoose.isValidObjectId(id);
-        if (!validId)
-            throw new BadRequestException('Wrong db Id format')
-
+    async getRestaurant(@Param('id', MongoIdValidator) id: string): Promise<Restaurant> {
         return this.resturantsService.find(id);
     }
 
@@ -41,14 +36,9 @@ export class RestaurantsController {
     @Put(':id')
     @UseGuards(AuthGuard())
     async update(
-        @Param('id') id: string,
+        @Param('id', MongoIdValidator) id: string,
         @Body() restaurant: Partial<RestaurantDto>,
         @CurrentUser() user: User): Promise<Restaurant> {
-        const validId = mongoose.isValidObjectId(id);
-        if (!validId)
-            throw new BadRequestException('Wrong db Id format')
-
-        //TODO convert to a decorator :)
         const resta = await this.resturantsService.find(id);
 
         if (resta.user.toString() !== user._id.toString())
@@ -62,7 +52,6 @@ export class RestaurantsController {
     async delete(
         @Param('id') id: string,
         @CurrentUser() user: User): Promise<Restaurant> {
-        //convert to a decorator :)
         const resta = await this.resturantsService.find(id);
 
         if (resta.user.toString() !== user._id.toString())
