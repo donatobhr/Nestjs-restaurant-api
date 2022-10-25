@@ -1,0 +1,546 @@
+{
+	"info": {
+		"_postman_id": "6b91757a-b2e0-4381-93b1-42753c36fcf5",
+		"name": "Restaurant API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20656371"
+	},
+	"item": [
+		{
+			"name": "Restaurant",
+			"item": [
+				{
+					"name": "Get Restaurant",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/restaurants/:id",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"restaurants",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "633e5d14c87cdba7a2ed3ef"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Restaurants",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/restaurants",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"restaurants"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "Donato",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Restaurant",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "name",
+								"value": "Retaurant 4",
+								"type": "text"
+							},
+							{
+								"key": "description",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Retaurant valid 2",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "This is just a description 3",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "ghulam@gamil.com",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "8096693872",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "Fine Dinning",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Churchill, Santo Domingo",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/restaurants/",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"restaurants",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Restaurant",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Donato test permissions guard 2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/restaurants/:id",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"restaurants",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "633e5c24c87cdba7a2ed3eef"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Restaurant",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/restaurants/:id",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"restaurants",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "633b84c3be8ca207b9b587c3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Image Upload",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": [
+										"/home/donatobhr/Pictures/Screenshots/Screenshot from 2022-09-16 13-52-05.png",
+										"/home/donatobhr/Pictures/Screenshots/Screenshot from 2022-09-17 16-26-06.png"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/restaurants/upload/:id",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"restaurants",
+								"upload",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "633b84c3be8ca207b9b587c3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "donato",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "donato@email.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/auth/signup",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"token\", pm.response.json().token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "donato2@email.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/auth/login",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Meal",
+			"item": [
+				{
+					"name": "Create Meal",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "restaurant",
+									"value": "633e5d14c87cdba7a2ed3ef6",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Pasta",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Pasta description",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "Pasta",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/meals",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"meals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get meal",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/meals/:id",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"meals",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6346400778a9c81362fdec19"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Meals",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/meals",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"meals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get restaurant Meals",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/meals/restaurant/:id",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"meals",
+								"restaurant",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "633e5d14c87cdba7a2ed3ef6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Meal",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Update Meal name test 3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/meals/:id",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"meals",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6346400778a9c81362fdec19"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Meal",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/meals/:id",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"meals",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "63410507ef8dabadec95a2ee"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
