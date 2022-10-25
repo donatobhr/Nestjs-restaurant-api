@@ -4,7 +4,7 @@ This project is part of the course [NestJs - Build Modern APIs in NestJs with Un
 
 I add a postman collection [file](https://github.com/donatobhr/Nestjs-restaurant-api/blob/master/Restaurant%20API.postman_collection.json) in case you would like to use it.
 
-To run this project you need to create an .env.developement file and add the add values to the key above.
+To run this project you need to create an .env.development file and add the add values to the key above.
 
 ```text
 DB_URI={{mongoDbUri}}
