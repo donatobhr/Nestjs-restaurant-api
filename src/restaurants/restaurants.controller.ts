@@ -10,6 +10,7 @@ import { User } from 'src/auth/schemas/user.schema';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { MongoIdValidator } from 'src/utils/ validators/mongoId.validation';
+import { RestaurantOwnershipGuard } from './guards/restaurantOwnership.guard';
 
 @Controller('restaurants')
 export class RestaurantsController {
@@ -34,34 +35,24 @@ export class RestaurantsController {
     }
 
     @Put(':id')
-    @UseGuards(AuthGuard())
+    @UseGuards(AuthGuard(), RestaurantOwnershipGuard)
     async update(
         @Param('id', MongoIdValidator) id: string,
-        @Body() restaurant: Partial<RestaurantDto>,
-        @CurrentUser() user: User): Promise<Restaurant> {
-        const resta = await this.resturantsService.find(id);
-
-        if (resta.user.toString() !== user._id.toString())
-            throw new ForbiddenException('Unabled to access this resource');
-
+        @Body() restaurant: Partial<RestaurantDto>): Promise<Restaurant> {
+        console.log(id);
         return this.resturantsService.update(id, restaurant);
     }
 
     @Delete(':id')
-    @UseGuards(AuthGuard())
+    @UseGuards(AuthGuard(), RestaurantOwnershipGuard)
     async delete(
-        @Param('id') id: string,
-        @CurrentUser() user: User): Promise<Restaurant> {
-        const resta = await this.resturantsService.find(id);
-
-        if (resta.user.toString() !== user._id.toString())
-            throw new ForbiddenException('Unabled to access this resource');
+        @Param('id') id: string): Promise<Restaurant> {
 
         return await this.resturantsService.delete(id);
     }
 
     @Put('upload/:id')
-    @UseGuards(AuthGuard())
+    @UseGuards(AuthGuard(), RestaurantOwnershipGuard)
     @UseInterceptors(FilesInterceptor('files'))
     async uploadFiles(
         @Param('id') id: string,
