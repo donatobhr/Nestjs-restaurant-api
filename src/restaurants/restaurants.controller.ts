@@ -47,7 +47,7 @@ export class RestaurantsController {
     @UseGuards(AuthGuard(), RestaurantOwnershipGuard)
     async delete(
         @Param('id') id: string): Promise<Restaurant> {
-
+    
         return await this.resturantsService.delete(id);
     }
 
