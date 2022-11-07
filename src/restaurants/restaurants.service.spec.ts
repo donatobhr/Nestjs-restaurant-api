@@ -1,30 +1,15 @@
-// import { Test, TestingModule } from '@nestjs/testing';
-// import { RestaurantsService } from './restaurants.service';
-
-// describe('RestaurantsService', () => {
-//   let service: RestaurantsService;
-
-//   beforeEach(async () => {
-//     const module: TestingModule = await Test.createTestingModule({
-//       providers: [RestaurantsService],
-//     }).compile();
-
-//     service = module.get<RestaurantsService>(RestaurantsService);
-//   });
-
-//   it('should be defined', () => {
-//     expect(service).toBeDefined();
-//   });
-// });
-
+import { NotFoundException } from "@nestjs/common";
 import { getModelToken } from "@nestjs/mongoose";
 import { Test, TestingModule } from "@nestjs/testing";
 import { Model } from "mongoose";
+import { UserRole } from "src/auth/schemas/user.schema";
 import { RestaurantsService } from "./restaurants.service";
 import { Restaurant } from "./schemas/restaurant.schema";
 
 const mockRestaurantService = {
   find: jest.fn(),
+  create: jest.fn(),
+  findById: jest.fn(),
 };
 
 const mockRestaurant = {
@@ -57,6 +42,14 @@ const mockRestaurant = {
   "updatedAt": "2022-10-25T03:41:25.571Z"
 };
 
+const mockUser = {
+  _id: "633e5d14c87cdba7a2ed3ef6",
+  name:"donato",
+  email:"donato@email.com",
+  role: UserRole.USER,
+  password: "12345678"
+}
+
 describe('RestaurantService', () => {
   let service: RestaurantsService;
   let model: Model<Restaurant>
@@ -78,6 +71,7 @@ describe('RestaurantService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+    expect(service).toBeInstanceOf(RestaurantsService);
   });
 
   it('shoud get all restaurant', async () => {
@@ -89,5 +83,45 @@ describe('RestaurantService', () => {
 
     const restaurants = await service.findAll({keyword: 'restaurant'});
     expect(restaurants).toEqual([mockRestaurant]);
+  });
+
+  it('should create restaurant', async () => {
+    const newMockRestaurant = {...mockRestaurant};
+    newMockRestaurant.user = mockUser._id;
+
+    jest
+      .spyOn(model, 'create')
+      .mockImplementationOnce(() => {
+        return Promise.resolve(newMockRestaurant)
+      });
+
+    const result = await service.create(newMockRestaurant as any, mockUser as any);
+
+    expect(result).toEqual(newMockRestaurant);
+    expect(result.user).toEqual(mockUser._id);
+  });
+
+  it('should get restaurant by Id', async () => {
+    jest.spyOn(model, 'findById').mockResolvedValueOnce(mockRestaurant as any);
+
+    const result = await service.find(mockRestaurant._id);
+
+    expect(result).toEqual(mockRestaurant);
+  });
+
+  it('shoud throw restaurant not found', async () => {
+    jest
+      .spyOn(model, 'findById')
+      .mockResolvedValueOnce(null);
+
+    let result;
+    try {
+      await service.find(mockRestaurant._id);
+    } catch(error) {
+      result = error;
+    }
+
+    expect(result).toBeInstanceOf(NotFoundException);
+    expect(result.message).toEqual('Restaurant not found');
   });
 });
