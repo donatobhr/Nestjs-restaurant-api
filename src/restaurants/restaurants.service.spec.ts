@@ -3,6 +3,8 @@ import { getModelToken } from "@nestjs/mongoose";
 import { Test, TestingModule } from "@nestjs/testing";
 import { Model } from "mongoose";
 import { UserRole } from "src/auth/schemas/user.schema";
+import APIFeautures from "src/utils/apiFeature.utils";
+import { Readable } from "stream";
 import { RestaurantsService } from "./restaurants.service";
 import { Restaurant } from "./schemas/restaurant.schema";
 
@@ -10,6 +12,8 @@ const mockRestaurantService = {
   find: jest.fn(),
   create: jest.fn(),
   findById: jest.fn(),
+  findByIdAndUpdate: jest.fn(),
+  findByIdAndDelete: jest.fn()
 };
 
 const mockRestaurant = {
@@ -71,7 +75,6 @@ describe('RestaurantService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
-    expect(service).toBeInstanceOf(RestaurantsService);
   });
 
   it('shoud get all restaurant', async () => {
@@ -123,5 +126,66 @@ describe('RestaurantService', () => {
 
     expect(result).toBeInstanceOf(NotFoundException);
     expect(result.message).toEqual('Restaurant not found');
+  });
+
+  it('should update the restaurant', async () => {
+    const restaurant = {...mockRestaurant, name: 'Updated name'};
+    const updateRestaurant = { name: 'Updated name' };
+    jest
+      .spyOn(model, 'findByIdAndUpdate')
+      .mockResolvedValueOnce(restaurant as any);
+
+    const updatedRestaurant = await service.update(restaurant._id, updateRestaurant as any);
+
+    expect(updatedRestaurant.name).toEqual(updateRestaurant.name);
+  });
+
+  it('should delete the restaurant', async () => {
+    jest
+      .spyOn(model, 'findByIdAndDelete')
+      .mockResolvedValueOnce(mockRestaurant as any);
+
+    const result = await service.delete(mockRestaurant._id);
+
+    expect(result).toEqual(mockRestaurant);
+  });
+
+  it('should upload restaurant images on S3 Bucket', async () => {
+    const files = [
+      {
+        filename: 'image1.jpeg',
+        fieldname: 'files',
+        originalname: 'image1.jpeg',
+        encoding: '7bit',
+        mimetype: 'image/jpeg',
+        buffer: "<Buffer ff 88 12 3d />" as unknown as Buffer,
+        size: 19288,
+        destination: "",
+        path: '/',
+        stream: '' as unknown as Readable
+      }
+    ]
+    const mockImages = [
+      {
+        "ETag": "bc91752bfd2495f3f12da05ddd2f20d7",
+        "Location": "https://donatoaws-nestjs-restaurant-api.s3.amazonaws.com/restaurants/Barbieri_-_ViaSophia25668_1667774324250.jpg",
+        "Key": "restaurants/Barbieri_-_ViaSophia25668_1667774324250.jpg",
+        "key": "restaurants/Barbieri_-_ViaSophia25668_1667774324250.jpg",
+        "Bucket": "donatoaws-nestjs-restaurant-api"
+      }
+    ];
+    const updateRestaurant = { ...mockRestaurant, images: mockImages };
+
+    jest
+      .spyOn(APIFeautures, 'uploadImages')
+      .mockResolvedValueOnce(mockImages);
+
+    jest
+      .spyOn(model, 'findByIdAndUpdate')
+      .mockResolvedValueOnce(updateRestaurant as any);
+
+    const result = await service.uploadImages(mockRestaurant._id, files);
+
+    expect(result).toEqual(updateRestaurant);
   });
 });
