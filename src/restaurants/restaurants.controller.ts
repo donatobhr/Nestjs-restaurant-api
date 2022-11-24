@@ -39,7 +39,6 @@ export class RestaurantsController {
     async update(
         @Param('id', MongoIdValidator) id: string,
         @Body() restaurant: Partial<RestaurantDto>): Promise<Restaurant> {
-        console.log(id);
         return this.resturantsService.update(id, restaurant);
     }
 

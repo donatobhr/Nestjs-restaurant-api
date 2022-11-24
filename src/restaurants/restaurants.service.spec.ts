@@ -1,6 +1,6 @@
 import { NotFoundException } from "@nestjs/common";
 import { getModelToken } from "@nestjs/mongoose";
-import { Test, TestingModule } from "@nestjs/testing";
+import { Test } from "@nestjs/testing";
 import { Model } from "mongoose";
 import { UserRole } from "src/auth/schemas/user.schema";
 import APIFeautures from "src/utils/apiFeature.utils";
@@ -8,7 +8,7 @@ import { Readable } from "stream";
 import { RestaurantsService } from "./restaurants.service";
 import { Restaurant } from "./schemas/restaurant.schema";
 
-const mockRestaurantService = {
+const mockRestaurantModel = {
   find: jest.fn(),
   create: jest.fn(),
   findById: jest.fn(),
@@ -64,7 +64,7 @@ describe('RestaurantService', () => {
         RestaurantsService,
         {
           provide: getModelToken(Restaurant.name),
-          useValue: mockRestaurantService
+          useValue: mockRestaurantModel
         }
       ]
     }).compile();
