@@ -100,7 +100,7 @@ describe('RestaurantController', () => {
     it('should create a new restaurant', async () => {
         const restaurant = {...mockRestaurant};
         const newMockRestaurant = {...mockRestaurant};
-        mockRestaurantService.create = jest.fn().mockResolvedValueOnce(restaurant);
+        mockRestaurantService.create.mockResolvedValueOnce(restaurant);
 
         const result = await controller.create(newMockRestaurant as any, mockUser as any);
 
