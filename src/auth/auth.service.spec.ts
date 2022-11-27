@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 import { AuthService } from './auth.service';
 import { User, UserRole } from './schemas/user.schema';
 import * as bcrypt from 'bcryptjs';
-import APIFeautures from 'src/utils/apiFeature.utils';
+import APIFeautures from '../utils/apiFeature.utils';
 import { ConflictException } from '@nestjs/common/exceptions/conflict.exception';
 import { UnauthorizedException } from '@nestjs/common';
 

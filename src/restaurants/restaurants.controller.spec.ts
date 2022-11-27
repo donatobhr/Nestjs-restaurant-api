@@ -1,7 +1,6 @@
-import { ForbiddenException } from "@nestjs/common";
 import { PassportModule } from "@nestjs/passport";
 import { Test, TestingModule } from "@nestjs/testing";
-import { UserRole } from "src/auth/schemas/user.schema";
+import { UserRole } from "../auth/schemas/user.schema";
 import { Readable } from "stream";
 import { RestaurantsController } from "./restaurants.controller";
 import { RestaurantsService } from "./restaurants.service";

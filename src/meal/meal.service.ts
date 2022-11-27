@@ -1,8 +1,8 @@
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
-import { User } from 'src/auth/schemas/user.schema';
-import { Restaurant } from 'src/restaurants/schemas/restaurant.schema';
+import { User } from '../auth/schemas/user.schema';
+import { Restaurant } from '../restaurants/schemas/restaurant.schema';
 import { Meal } from './schema/meal.schema';
 
 @Injectable()

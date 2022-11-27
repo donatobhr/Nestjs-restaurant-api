@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, ForbiddenException, Get, NotFoundException, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
-import { User } from 'src/auth/schemas/user.schema';
-import { MongoIdValidator } from 'src/utils/ validators/mongoId.validation';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import { User } from '../auth/schemas/user.schema';
+import { MongoIdValidator } from '../utils/ validators/mongoId.validation';
 import { MealDto } from './dto/meal.dto';
 import { MealOwneshipGuard } from './guards/mealOwnership.guard';
 import { MealService } from './meal.service';

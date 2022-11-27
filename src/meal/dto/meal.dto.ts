@@ -1,6 +1,5 @@
 import { IsEnum, IsNotEmpty, IsNumber, IsString } from "class-validator";
-import { User } from "src/auth/schemas/user.schema";
-import { Restaurant } from "src/restaurants/schemas/restaurant.schema";
+import { User } from "../../auth/schemas/user.schema";
 import { Category } from "../schema/meal.schema";
 
 export class MealDto

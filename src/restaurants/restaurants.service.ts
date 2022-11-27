@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Query } from 'express-serve-static-core';
 import { Model } from 'mongoose';
-import { User } from 'src/auth/schemas/user.schema';
-import APIFeautures from 'src/utils/apiFeature.utils';
+import { User } from '../auth/schemas/user.schema';
+import APIFeautures from '../utils/apiFeature.utils';
 import { Restaurant } from './schemas/restaurant.schema';
 
 @Injectable()

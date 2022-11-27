@@ -1,8 +1,8 @@
 import { JwtService } from '@nestjs/jwt';
 import { S3 } from 'aws-sdk';
 import * as nodeGeoCode from 'node-geocoder';
-import RestaurantS3Bucket from 'src/helpers/restaurantS3Bucket.helper';
-import { Location } from 'src/restaurants/schemas/restaurant.schema';
+import RestaurantS3Bucket from '../helpers/restaurantS3Bucket.helper';
+import { Location } from '../restaurants/schemas/restaurant.schema';
 
 export default class APIFeautures {
 

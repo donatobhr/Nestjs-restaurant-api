@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { Document, mongo } from "mongoose";
-import { User } from "src/auth/schemas/user.schema";
-import { Meal } from "src/meal/schema/meal.schema";
-import APIFeautures from "src/utils/apiFeature.utils";
+import { User } from "../../auth/schemas/user.schema";
+import { Meal } from "../../meal/schema/meal.schema";
+import APIFeautures from "../../utils/apiFeature.utils";
 
 
 export class Location {

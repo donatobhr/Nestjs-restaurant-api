@@ -4,8 +4,8 @@ import { Model } from 'mongoose';
 import { UserDto } from './dto/user.dto';
 import { User } from './schemas/user.schema';
 import * as bcrypt from 'bcryptjs';
-import APIFeautures from 'src/utils/apiFeature.utils';
 import { JwtService } from '@nestjs/jwt';
+import APIFeautures from '../utils/apiFeature.utils';
 
 @Injectable()
 export class AuthService {
@@ -26,7 +26,7 @@ export class AuthService {
                 email,
                 password: hashedPassword
             })
-    
+            
             const token = await APIFeautures.assignJwtToken(newUser._id, this.jwtService);
             return {token};
         }catch(error){
