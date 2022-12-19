@@ -4,7 +4,7 @@ This project is part of the course [NestJs - Build Modern APIs in NestJs with Un
 
 I add a postman collection [file](https://github.com/donatobhr/Nestjs-restaurant-api/blob/master/Restaurant%20API.postman_collection.json) in case you would like to use it.
 
-To run this project you need to create an .env.development file and add the add values to the key above.
+To run this project you need to create an .env.development file and add the values to the key above.
 
 ```text
 DB_URI={{mongoDbUri}}
@@ -17,6 +17,6 @@ JWT_SECRET=
 JWT_EXPIRES=1d
 ```
 
-As GEOCODE provider I used [mapquest](https://www.mapquest.com/) in my project, but you can use others.
+As GEOCODE provider, I used [mapquest](https://www.mapquest.com/) in my project, but you can use others.
 
-The s3 bucket is just for save the images of the restaurants.
+The s3 bucket is just to save the images of the restaurants.
